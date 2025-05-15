@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bhb0akk4inst"]
+
+[ext_resource type="Script" uid="uid://d3krj0g6s5xlx" path="res://enemydeathparticles.gd" id="1_wkkxr"]
+
+[sub_resource type="Gradient" id="Gradient_aqvio"]
+colors = PackedColorArray(0.47, 0.47, 0.47, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_su3ps"]
+gradient = SubResource("Gradient_aqvio")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r43jd"]
+particle_flag_disable_z = true
+angle_min = -471.7
+angle_max = 471.7
+spread = 180.0
+initial_velocity_max = 126.45
+gravity = Vector3(0, 1, 0)
+linear_accel_min = 3.45
+linear_accel_max = 33.04
+scale_min = 5.0
+scale_max = 10.0
+color = Color(1, 0.35, 0.35, 1)
+color_ramp = SubResource("GradientTexture1D_su3ps")
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+emitting = false
+lifetime = 0.57
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_r43jd")
+script = ExtResource("1_wkkxr")

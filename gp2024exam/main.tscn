@@ -1,0 +1,142 @@
+[gd_scene load_steps=7 format=3 uid="uid://c5cqiasp6s1c0"]
+
+[ext_resource type="Script" uid="uid://bou3piajupks" path="res://player.gd" id="1_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://cank0hjkkdxv1" path="res://32x32white.png" id="2_h2yge"]
+[ext_resource type="Script" uid="uid://cochnpok1kcd" path="res://game_manager.gd" id="3_h2yge"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
+size = Vector2(136, 731)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_h2yge"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["Player"]]
+position = Vector2(370, 310)
+scale = Vector2(1.7, 1.7)
+script = ExtResource("1_0xm2m")
+speed = 300
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("2_h2yge")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="GameManager" type="Node2D" parent="."]
+script = ExtResource("3_h2yge")
+
+[node name="Marker2D" type="Marker2D" parent="GameManager" groups=["Spawn"]]
+position = Vector2(1215, 41)
+
+[node name="Marker2D2" type="Marker2D" parent="GameManager" groups=["Spawn"]]
+position = Vector2(1215, 119)
+
+[node name="Marker2D3" type="Marker2D" parent="GameManager" groups=["Spawn"]]
+position = Vector2(1215, 199)
+
+[node name="Marker2D4" type="Marker2D" parent="GameManager" groups=["Spawn"]]
+position = Vector2(1215, 294)
+
+[node name="Marker2D5" type="Marker2D" parent="GameManager" groups=["Spawn"]]
+position = Vector2(1215, 383)
+
+[node name="Marker2D6" type="Marker2D" parent="GameManager" groups=["Spawn"]]
+position = Vector2(1215, 479)
+
+[node name="Marker2D7" type="Marker2D" parent="GameManager" groups=["Spawn"]]
+position = Vector2(1215, 575)
+
+[node name="SpawnTimer" type="Timer" parent="GameManager"]
+wait_time = 0.1
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthText" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Health: 100"
+
+[node name="EnemiesText" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Enemes: 0"
+
+[node name="EnemyComboThing" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+horizontal_alignment = 1
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DiedText" type="Label" parent="CanvasLayer/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 91
+text = "YOU DIED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EnemiesSurvivedText" type="Label" parent="CanvasLayer/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "You survived 20 Enemies"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EnemyDespawnArea" type="Area2D" parent="."]
+position = Vector2(-42, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDespawnArea"]
+position = Vector2(-58, 318.5)
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_h2yge")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 649)
+shape = SubResource("WorldBoundaryShape2D_h2yge")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 649)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_h2yge")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1152, 649)
+rotation = -1.5708
+shape = SubResource("WorldBoundaryShape2D_h2yge")
+
+[connection signal="timeout" from="GameManager/SpawnTimer" to="GameManager" method="_on_spawn_timer_timeout"]
+[connection signal="area_entered" from="EnemyDespawnArea" to="GameManager" method="_on_enemy_despawn_area_body_entered"]
