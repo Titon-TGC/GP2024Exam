@@ -15,4 +15,5 @@ func _physics_process(delta: float) -> void:
 
 func _take_damage():
 	health -= 1
-	$"../CanvasLayer/VBoxContainer/HealthText".text = "Health: " + str(health)
+	$"../CanvasLayer/VBoxContainer/HealthText".text = str(health) + "/100"
+	$"../CanvasLayer/VBoxContainer/HealthText/ProgressBar".value = health
